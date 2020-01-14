@@ -66,4 +66,11 @@ public class Bucket {
         prime = prime + (userId == null ? 0 : userId.hashCode());
         return prime;
     }
+
+    @Override
+    public String toString() {
+        return "Bucket "
+                + "bucketId = " + bucketId + ", items=" + items
+                + ", userId=" + userId;
+    }
 }
