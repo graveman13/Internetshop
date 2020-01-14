@@ -1,6 +1,10 @@
 package mate.academy.internetshop.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import java.util.stream.Collectors;
+
 
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.dao.ItemDao;
@@ -55,6 +59,7 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public void deleteItem(Bucket bucket, Item item) {
+        bucket.getItems().remove(item);
         bucket.deleteItem(item);
         bucketDao.update(bucket);
     }
@@ -66,8 +71,22 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
+    public Bucket getBucket(Long userId) {
+        return bucketDao.getAll().stream()
+                .filter(bucket -> bucket.getUserId()
+                        .equals(userId)).findAny().get();
+    }
+
+    @Override
     public List<Item> getAllItems(Bucket bucket) {
         Bucket bucketTmp = bucketDao.get(bucket.getBucketId()).get();
         return bucketTmp.getItems();
+    }
+
+    @Override
+    public List<Bucket> getAllBucketByUser(Long userId) {
+        return bucketDao.getAll().stream()
+                .filter(bucket -> bucket.getUserId().equals(userId))
+                .collect(Collectors.toList());
     }
 }

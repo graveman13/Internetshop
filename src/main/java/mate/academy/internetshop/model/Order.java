@@ -58,4 +58,12 @@ public class Order {
         prime = prime + (userId == null ? 0 : userId.hashCode());
         return prime;
     }
+
+  @Override
+    public String toString() {
+        return "Order "
+                + "orderId=" + orderId
+                + ", items=" + items
+                + ", userId=" + userId;
+    }
 }

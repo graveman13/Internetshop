@@ -60,4 +60,13 @@ public class Item {
         prime = prime + (itemName == null ? 0 : itemName.hashCode());
         return prime;
     }
+
+    @Override
+    public String toString() {
+        return "Item "
+                + "itemId=" + itemId
+                + ", itemName='" + itemName
+                + ", itemPrice=" + itemPrice
+                + ", counter=" + counter;
+    }
 }
