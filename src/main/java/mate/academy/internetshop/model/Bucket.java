@@ -67,12 +67,10 @@ public class Bucket {
         return prime;
     }
 
-
     @Override
     public String toString() {
         return "Bucket "
                 + "bucketId = " + bucketId + ", items=" + items
                 + ", userId=" + userId;
     }
-
 }

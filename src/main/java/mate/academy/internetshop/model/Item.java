@@ -61,7 +61,6 @@ public class Item {
         return prime;
     }
 
-
     @Override
     public String toString() {
         return "Item "
@@ -70,5 +69,4 @@ public class Item {
                 + ", itemPrice=" + itemPrice
                 + ", counter=" + counter;
     }
-
 }

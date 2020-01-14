@@ -2,12 +2,9 @@ package mate.academy.internetshop.model;
 
 public class User {
     private String name;
-
     private String surname;
     private String login;
     private String password;
-
-
     private Long userId;
 
     public String getName() {
@@ -25,7 +22,6 @@ public class User {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-
 
     public String getSurname() {
         return surname;
@@ -72,12 +68,10 @@ public class User {
         return prime;
     }
 
-
     @Override
     public String toString() {
         return "User "
                 + "name='" + name
                 + ", userId=" + userId;
     }
-
 }
