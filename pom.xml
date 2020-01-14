@@ -19,6 +19,7 @@
         </maven.checkstyle.plugin.configLocation>
     </properties>
 
+    </properties>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -37,7 +38,11 @@
             <version>3.1.0</version>
         </dependency>
     </dependencies>
-
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
