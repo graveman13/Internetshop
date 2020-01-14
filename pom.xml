@@ -20,6 +20,10 @@
     </properties>
 
     </properties>
+
+
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -43,6 +47,7 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
