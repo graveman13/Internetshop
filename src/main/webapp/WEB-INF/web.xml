@@ -109,14 +109,5 @@
     <servlet-mapping>
         <servlet-name>OrdersController</servlet-name>
         <url-pattern>/orders</url-pattern>
-    <servlet>
-        <servlet-name>index</servlet-name>
-        <servlet-class>mate.academy.internetshop.controller.IndexController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>index</servlet-name>
-        <url-pattern>/index</url-pattern>
-
     </servlet-mapping>
 </web-app>

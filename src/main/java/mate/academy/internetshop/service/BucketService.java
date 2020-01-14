@@ -15,10 +15,8 @@ public interface BucketService extends GenericService<Bucket, Long> {
 
     Bucket getBucket(Long userId);
 
-    List<Item> getAllItems(Bucket bucket);
-
     List<Bucket> getAllBucketByUser(Long userId);
 
-  List<Item> getAllItems(Bucket bucket);
+    List<Item> getAllItems(Bucket bucket);
 
 }
