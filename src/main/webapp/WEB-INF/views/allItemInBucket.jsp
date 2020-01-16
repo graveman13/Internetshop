@@ -25,13 +25,13 @@
                 <c:out value="${item.itemId}"/>
             </td>
             <td>
-                <a href="/internet_shop_war_exploded/bucket_del_item?item_id=${item.itemId}">DELETE</a>
+                <a href="/internet_shop_war_exploded/servlet/bucket_del_item?item_id=${item.itemId}">DELETE</a>
             </td>
         </tr>
     </c:forEach>
 </table>
-<p><a href="/internet_shop_war_exploded/show_all_items">SHOW ALL ITEMS</a></p>
-<p><a href="/internet_shop_war_exploded/order">COMPLITE ORDER</a></p>
+<p><a href="/internet_shop_war_exploded/servlet/show_all_items">SHOW ALL ITEMS</a></p>
+<p><a href="/internet_shop_war_exploded/servlet/order">COMPLITE ORDER</a></p>
 <a href="/internet_shop_war_exploded">BACK TO HOME</a>
 </body>
 </html>

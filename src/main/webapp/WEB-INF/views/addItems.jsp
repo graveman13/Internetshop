@@ -5,7 +5,7 @@
 </head>
 <body>
 <h3>ITEM ADDING</h3>
-<form action="/internet_shop_war_exploded/add_item" method=post>
+<form action="/internet_shop_war_exploded/servlet/add_item" method=post>
     <label for="item_name"><b>Item name</b></label>
     <input type="text" name="item_name" required></p>
     <p><label for="item_price"><b>Item price</b></label>

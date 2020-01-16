@@ -10,29 +10,34 @@
 </form>
 </p>
 <p>
-<form action="/internet_shop_war_exploded/add_item" method=get>
+<form action="/internet_shop_war_exploded/servlet/add_item" method=get>
     <button type="submit" class="text">Add item</button>
 </form>
 </p>
 <p>
 <p>
-<form action="/internet_shop_war_exploded/show_all_items" method=get>
+<form action="/internet_shop_war_exploded/servlet/show_all_items" method=get>
     <button type="submit" class="text">Show all items</button>
 </form>
 </p>
 <p>
-<form action="/internet_shop_war_exploded/getAllUsers" method=get>
+<form action="/internet_shop_war_exploded/servlet/getAllUsers" method=get>
     <button type="submit" class="text">Show all users</button>
 </form>
 </p>
 <p>
-<form action="/internet_shop_war_exploded/bucket" method=get>
+<form action="/internet_shop_war_exploded/servlet/bucket" method=get>
     <button type="submit" class="text">Show bucket</button>
 </form>
 </p>
 <p>
-<form action="/internet_shop_war_exploded/order" method=get>
+<form action="/internet_shop_war_exploded/servlet/orders" method=get>
     <button type="submit" class="text">Show all orders</button>
+</form>
+</p>
+<p>
+<form action="/internet_shop_war_exploded/login" method=get>
+    <button type="submit" class="text">Sign in</button>
 </form>
 </p>
 </body>

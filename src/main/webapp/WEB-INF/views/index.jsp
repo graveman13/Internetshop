@@ -4,6 +4,6 @@
     <title>Index</title>
 </head>
 <body>
-<h3>Hello Word !</h3>
+<h3>Index page</h3>
 </body>
 </html>
