@@ -51,8 +51,7 @@ public class UserServiceImpl implements UserService {
     public User login(String login, String password) throws AuthenticatioException {
         Optional<User> user = userDao.findByLogin(login);
         if (user.isEmpty()
-                || !user.get().getLogin().equals(login)
-                && !user.get().getPassword().equals(password)) {
+                || !user.get().getPassword().equals(password)) {
             throw new AuthenticatioException("Incorrect user name or password");
         }
         return user.get();
