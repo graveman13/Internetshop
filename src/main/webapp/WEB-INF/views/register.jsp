@@ -34,5 +34,6 @@
         <p>Already have an account? <a href=/internet_shop_war_exploded/login>Sign in</a>.</p>
     </div>
 </form>
+<a href="/internet_shop_war_exploded">BACK TO HOME</a>
 </body>
 </html>
