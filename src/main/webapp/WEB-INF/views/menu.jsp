@@ -42,7 +42,7 @@ ${userName}
 </form>
 </p>
 <p>
-<form action="/internet_shop_war_exploded/login" method=get>
+<form action="/internet_shop_war_exploded/logout" method=get>
     <button type="submit" class="text">Logout</button>
 </form>
 </p>

@@ -1,12 +1,12 @@
 package mate.academy.internetshop.model;
 
 public class Role {
-    private final Long id;
+    private final Long ID;
     private static Long generatorId = 0L;
     private RoleName roleName;
 
     public Role() {
-        this.id = generatorId++;
+        this.ID = generatorId++;
     }
 
     public Role(RoleName roleName) {
@@ -15,7 +15,7 @@ public class Role {
     }
 
     public Long getID() {
-        return id;
+        return ID;
     }
 
     public RoleName getRoleName() {
