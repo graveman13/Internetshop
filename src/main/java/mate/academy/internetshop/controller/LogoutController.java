@@ -12,8 +12,15 @@ public class LogoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.setAttribute("userId", "");
+        HttpSession session = req.getSession(true);
+        session.setAttribute("userId", "");
         req.getSession().invalidate();
+        for (Cookie cookie : req.getCookies()) {
+            if (cookie.getName().equals("MATE")) {
+                cookie.setMaxAge(0);
+                cookie.setValue("");
+            }
+        }
         req.getRequestDispatcher("WEB-INF/views/menu.jsp").forward(req, resp);
     }
 }
