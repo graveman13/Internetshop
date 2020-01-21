@@ -24,5 +24,6 @@
         <p>Don't have an account? <a href=/internet_shop_war_exploded/registration>Sign up</a>.</p>
     </div>
 </form>
+<a href="/internet_shop_war_exploded">BACK TO HOME</a>
 </body>
 </html>

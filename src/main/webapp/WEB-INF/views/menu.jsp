@@ -3,6 +3,7 @@
 <head>
     <title>Menu</title>
 </head>
+${userName}
 <h3>MAIN MENU</h3>
 <p>
 <form action="/internet_shop_war_exploded/registration" method=get>
@@ -38,6 +39,11 @@
 <p>
 <form action="/internet_shop_war_exploded/login" method=get>
     <button type="submit" class="text">Sign in</button>
+</form>
+</p>
+<p>
+<form action="/internet_shop_war_exploded/logout" method=get>
+    <button type="submit" class="text">Logout</button>
 </form>
 </p>
 </body>
