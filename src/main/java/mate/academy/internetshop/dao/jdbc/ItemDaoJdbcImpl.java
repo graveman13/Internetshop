@@ -2,7 +2,6 @@ package mate.academy.internetshop.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ import mate.academy.internetshop.model.Item;
 
 @Dao
 public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
-    private static String dataBaseName = "internetshop.items";
+    private static final String DATA_BASE_NAME = "internetshop.items";
 
     public ItemDaoJdbcImpl(Connection connection) {
         super(connection);
@@ -25,11 +24,11 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     public Item create(Item entity) {
         String query = String.format(Locale.ROOT,
                 "INSERT INTO %s (item_name,item_price) VALUES('%s','%.2f');",
-                dataBaseName, entity.getItemName(), entity.getItemPrice());
+                DATA_BASE_NAME, entity.getItemName(), entity.getItemPrice());
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException();
         }
         return entity;
     }
@@ -37,7 +36,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     @Override
     public Optional<Item> get(Long id) {
         String query = String.format(Locale.ROOT, "SELECT * FROM %s WHERE item_id='%d';",
-                dataBaseName, id);
+                DATA_BASE_NAME, id);
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
@@ -50,8 +49,8 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
                 item.setItemPrice(itemPrice);
                 return Optional.of(item);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException();
         }
         return Optional.empty();
     }
@@ -60,11 +59,11 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     public Item update(Item item) {
         String query = String.format(Locale.ROOT,
                 "UPDATE FROM %s SET item_id='%d', item_name='%s', item_price='%.2f';",
-                dataBaseName, item.getItemName(), item.getItemName(), item.getItemPrice());
+                DATA_BASE_NAME, item.getItemName(), item.getItemName(), item.getItemPrice());
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException();
         }
         return item;
     }
@@ -72,15 +71,13 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     @Override
     public boolean deleteId(Long id) {
         String query = String.format("DELETE FROM %s WHERE item_id='%d';",
-                dataBaseName, id);
+                DATA_BASE_NAME, id);
         try (Statement statement = connection.createStatement()) {
             statement.executeQuery(query);
-            statement.executeUpdate(query);
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException();
         }
-        return false;
     }
 
     @Override
@@ -92,7 +89,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     public List<Item> getAll() {
         List<Item> items = new ArrayList<>();
         String query = String.format("SELECTE * FROM %s;",
-                dataBaseName);
+                DATA_BASE_NAME);
         try (Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
@@ -105,8 +102,8 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
                 item.setItemPrice(itemPrice);
                 items.add(item);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException();
         }
         return items;
     }
