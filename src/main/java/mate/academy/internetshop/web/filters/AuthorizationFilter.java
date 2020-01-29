@@ -16,6 +16,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
@@ -61,7 +62,12 @@ public class AuthorizationFilter implements Filter {
             processAuthentication(req, resp, chain);
             return;
         } else {
-            Optional<User> user = userService.getByToken(token);
+            Optional<User> user = null;
+            try {
+                user = userService.getByToken(token);
+            } catch (DataProcessingException e) {
+                e.printStackTrace();
+            }
             if (user.isPresent()) {
                 if (verifyRole(user.get(), roleName)) {
                     processAuthentication(req, resp, chain);

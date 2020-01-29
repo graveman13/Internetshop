@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import mate.academy.internetshop.dao.UserDao;
 import mate.academy.internetshop.exceptions.AuthenticatioException;
+import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.lib.Service;
 import mate.academy.internetshop.model.User;
@@ -17,38 +18,39 @@ public class UserServiceImpl implements UserService {
     private static UserDao userDao;
 
     @Override
-    public User create(User user) {
+    public User create(User user) throws DataProcessingException {
         user.setToken(getToken());
         return userDao.create(user);
     }
 
     @Override
-    public User get(Long id) {
+    public User get(Long id) throws DataProcessingException {
         return userDao.get(id).get();
     }
 
     @Override
-    public User update(User user) {
+    public User update(User user) throws DataProcessingException {
         return userDao.update(user);
     }
 
     @Override
-    public boolean deleteId(Long id) {
+    public boolean deleteId(Long id) throws DataProcessingException {
         return userDao.deleteId(id);
     }
 
     @Override
-    public boolean delete(User user) {
+    public boolean delete(User user) throws DataProcessingException {
         return userDao.delete(user);
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> getAll() throws DataProcessingException {
         return userDao.getAll();
     }
 
     @Override
-    public User login(String login, String password) throws AuthenticatioException {
+    public User login(String login, String password)
+            throws AuthenticatioException, DataProcessingException {
         Optional<User> user = userDao.findByLogin(login);
         if (user.isEmpty()
                 || !user.get().getPassword().equals(password)) {
@@ -58,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getByToken(String token) {
+    public Optional<User> getByToken(String token) throws DataProcessingException {
         return userDao.getByToken(token);
     }
 

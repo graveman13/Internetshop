@@ -8,6 +8,7 @@ import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.Bucket;
+import mate.academy.internetshop.model.Item;
 
 @Dao
 public class BucketDaoImpl implements BucketDao {
@@ -53,5 +54,15 @@ public class BucketDaoImpl implements BucketDao {
     @Override
     public List<Bucket> getAll() {
         return Storage.buckets;
+    }
+
+    @Override
+    public List<Item> getItemsByBucket(Long id) {
+        return null;
+    }
+
+    @Override
+    public Optional<Bucket> getByUserId(Long id) {
+        return Optional.empty();
     }
 }

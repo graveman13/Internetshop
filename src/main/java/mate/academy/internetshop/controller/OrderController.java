@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Bucket;
-import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.model.Order;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.BucketService;
@@ -30,17 +30,22 @@ public class OrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Long userId = (Long)req.getSession(true).getAttribute("userId");
+        Long userId = (Long) req.getSession(true).getAttribute("userId");
 
-        Bucket bucket = bucketService.getBucket(userId);
-        List<Item> items = bucket.getItems();
+        Bucket bucket = null;
+        try {
+            bucket = bucketService.getBucket(userId);
+            bucket.setItems(bucketService.getAllItems(bucket));
 
-        User user = userService.get(userId);
-        orderService.completeOrder(items, user);
+            User user = userService.get(userId);
+            orderService.completeOrder(bucket.getItems(), user);
 
-        List<Order> orders = orderService.getUserOrders(user);
-        req.setAttribute("orders", orders);
-        req.setAttribute("user_name",user.getName());
+            List<Order> orders = orderService.getUserOrders(user);
+            req.setAttribute("orders", orders);
+            req.setAttribute("user_name", user.getName());
+        } catch (DataProcessingException e) {
+            e.printStackTrace();
+        }
         req.getRequestDispatcher("/WEB-INF/views/order.jsp").forward(req, resp);
     }
 }

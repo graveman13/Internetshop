@@ -12,6 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
@@ -35,7 +36,12 @@ public class AuthenticationFilter implements Filter {
         }
         for (Cookie cookie : req.getCookies()) {
             if (cookie.getName().equals("MATE")) {
-                Optional<User> user = userService.getByToken(cookie.getValue());
+                Optional<User> user = null;
+                try {
+                    user = userService.getByToken(cookie.getValue());
+                } catch (DataProcessingException e) {
+                    e.printStackTrace();
+                }
                 if (user.isPresent()) {
                     chain.doFilter(request, response);
                     return;
