@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.User;
@@ -34,17 +35,21 @@ public class RegistrationController extends HttpServlet {
         user.setPassword(req.getParameter("psw"));
         user.setName(req.getParameter("user_name"));
         user.setSurname(req.getParameter("user_surname"));
-        User userWithID = userService.create(user);
+        try {
+            User userWithID = userService.create(user);
 
-        HttpSession session = req.getSession(true);
-        session.setAttribute("userId",userWithID.getUserId());
-        Cookie cookie = new Cookie("MATE", userWithID.getToken());
-        resp.addCookie(cookie);
+            HttpSession session = req.getSession(true);
+            session.setAttribute("userId", userWithID.getUserId());
+            Cookie cookie = new Cookie("MATE", userWithID.getToken());
+            resp.addCookie(cookie);
 
-        Bucket bucket = new Bucket();
-        bucket.setUser(userWithID.getUserId());
-        bucketService.create(bucket);
-
+            Bucket bucket = new Bucket();
+            bucket.setUser(userWithID.getUserId());
+            bucketService.create(bucket);
+        } catch (DataProcessingException e) {
+            req.setAttribute("message", e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
+        }
         resp.sendRedirect(req.getContextPath() + "/servlet/getAllUsers");
     }
 }

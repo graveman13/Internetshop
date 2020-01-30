@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
@@ -24,7 +25,12 @@ public class InjectDataController extends HttpServlet {
         user.addRoles(Role.of("USER"));
         user.setLogin("bob");
         user.setPassword("1");
-        userService.create(user);
+        try {
+            userService.create(user);
+        } catch (DataProcessingException e) {
+            req.setAttribute("message",e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
+        }
         req.setAttribute("userName", user.getName());
 
         User admin = new User();
@@ -33,7 +39,12 @@ public class InjectDataController extends HttpServlet {
         admin.addRoles(Role.of("ADMIN"));
         admin.setLogin("admin");
         admin.setPassword("1");
-        userService.create(admin);
+        try {
+            userService.create(admin);
+        } catch (DataProcessingException e) {
+            req.setAttribute("message",e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
+        }
         req.setAttribute("userName", admin.getName());
         req.getRequestDispatcher("WEB-INF/views/menu.jsp").forward(req, resp);
     }
