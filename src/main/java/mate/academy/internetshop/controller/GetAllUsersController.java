@@ -23,7 +23,8 @@ public class GetAllUsersController extends HttpServlet {
         try {
             users = userService.getAll();
         } catch (DataProcessingException e) {
-            e.printStackTrace();
+            req.setAttribute("message",e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         req.setAttribute("users", users);
         req.getRequestDispatcher("/WEB-INF/views/allUsers.jsp").forward(req, resp);

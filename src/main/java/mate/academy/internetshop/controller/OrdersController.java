@@ -23,12 +23,12 @@ public class OrdersController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Long userId = (Long) req.getSession(true).getAttribute("userId");
-        User user = null;
         try {
-            user = userService.get(userId);
+            User user = userService.get(userId);
             req.setAttribute("orders", orderService.getUserOrders(user));
         } catch (DataProcessingException e) {
-            e.printStackTrace();
+            req.setAttribute("message",e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         req.getRequestDispatcher("/WEB-INF/views/order.jsp").forward(req, resp);
     }

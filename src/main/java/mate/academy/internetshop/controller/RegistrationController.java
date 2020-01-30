@@ -35,9 +35,8 @@ public class RegistrationController extends HttpServlet {
         user.setPassword(req.getParameter("psw"));
         user.setName(req.getParameter("user_name"));
         user.setSurname(req.getParameter("user_surname"));
-        User userWithID = null;
         try {
-            userWithID = userService.create(user);
+            User userWithID = userService.create(user);
 
             HttpSession session = req.getSession(true);
             session.setAttribute("userId", userWithID.getUserId());
@@ -48,7 +47,8 @@ public class RegistrationController extends HttpServlet {
             bucket.setUser(userWithID.getUserId());
             bucketService.create(bucket);
         } catch (DataProcessingException e) {
-            e.printStackTrace();
+            req.setAttribute("message", e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         resp.sendRedirect(req.getContextPath() + "/servlet/getAllUsers");
     }

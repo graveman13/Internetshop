@@ -19,14 +19,15 @@ public class BucketController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Long userId = (Long) req.getSession(true).getAttribute("userId");
-        Bucket bucket = null;
         try {
-            bucket = bucketService.getBucket(userId);
+            Bucket bucket = bucketService.getBucket(userId);
             bucket.setItems(bucketService.getAllItems(bucket));
+            req.setAttribute("items", bucket.getItems());
+            req.getRequestDispatcher("/WEB-INF/views/allItemInBucket.jsp").forward(req, resp);
         } catch (DataProcessingException e) {
-            e.printStackTrace();
+            req.setAttribute("message", e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
-        req.setAttribute("items", bucket.getItems());
-        req.getRequestDispatcher("/WEB-INF/views/allItemInBucket.jsp").forward(req, resp);
     }
 }
+

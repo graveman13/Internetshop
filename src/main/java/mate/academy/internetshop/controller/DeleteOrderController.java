@@ -27,7 +27,8 @@ public class DeleteOrderController extends HttpServlet {
             String orderId = req.getParameter("order_id");
             orderService.deleteId(Long.valueOf(orderId));
         } catch (DataProcessingException e) {
-            e.printStackTrace();
+            req.setAttribute("message",e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         resp.sendRedirect(req.getContextPath() + "/servlet/orders");
     }

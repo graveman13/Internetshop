@@ -1,6 +1,7 @@
 package mate.academy.internetshop.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,11 +20,12 @@ public class GetAllItemsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        List<Item> items = null;
+        List<Item> items = new ArrayList<>();
         try {
-            items = itemService.getAll();
+            items.addAll(itemService.getAll());
         } catch (DataProcessingException e) {
-            e.printStackTrace();
+            req.setAttribute("message",e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         req.setAttribute("items", items);
         req.getRequestDispatcher("/WEB-INF/views/allItems.jsp").forward(req, resp);

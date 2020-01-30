@@ -28,7 +28,8 @@ public class InjectDataController extends HttpServlet {
         try {
             userService.create(user);
         } catch (DataProcessingException e) {
-            e.printStackTrace();
+            req.setAttribute("message",e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         req.setAttribute("userName", user.getName());
 
@@ -41,7 +42,8 @@ public class InjectDataController extends HttpServlet {
         try {
             userService.create(admin);
         } catch (DataProcessingException e) {
-            e.printStackTrace();
+            req.setAttribute("message",e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         req.setAttribute("userName", admin.getName());
         req.getRequestDispatcher("WEB-INF/views/menu.jsp").forward(req, resp);

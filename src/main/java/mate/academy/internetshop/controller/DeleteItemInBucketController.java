@@ -24,13 +24,13 @@ public class DeleteItemInBucketController extends HttpServlet {
             throws ServletException, IOException {
         String itemId = req.getParameter("item_id");
         Long userId = (Long) req.getSession(true).getAttribute("userId");
-        Bucket bucket = null;
         try {
-            bucket = bucketService.getBucket(userId);
+            Bucket bucket = bucketService.getBucket(userId);
             Item item = itemService.get(Long.valueOf(itemId));
             bucketService.deleteItem(bucket, item);
         } catch (DataProcessingException e) {
-            e.printStackTrace();
+            req.setAttribute("message",e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         resp.sendRedirect(req.getContextPath() + "/servlet/bucket");
     }

@@ -30,7 +30,8 @@ public class AddItemController extends HttpServlet {
         try {
             itemService.create(item);
         } catch (DataProcessingException e) {
-            e.printStackTrace();
+            req.setAttribute("message",e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         req.setAttribute("itemName", item.getItemName());
         req.setAttribute("itemPrice", item.getItemPrice());

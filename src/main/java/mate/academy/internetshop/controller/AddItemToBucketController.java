@@ -23,14 +23,14 @@ public class AddItemToBucketController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String itemId = req.getParameter("item_id");
-        Item item = null;
         try {
-            item = itemService.get(Long.valueOf(itemId));
+            Item item = itemService.get(Long.valueOf(itemId));
             Long userId = (Long) req.getSession(true).getAttribute("userId");
             Bucket bucket = bucketService.getBucket(userId);
             bucketService.addItem(bucket, item);
         } catch (DataProcessingException e) {
-            e.printStackTrace();
+            req.setAttribute("message",e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         resp.sendRedirect(req.getContextPath() + "/servlet/bucket");
     }

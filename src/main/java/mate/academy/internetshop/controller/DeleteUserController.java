@@ -21,7 +21,8 @@ public class DeleteUserController extends HttpServlet {
         try {
             userService.deleteId(Long.valueOf(userId));
         } catch (DataProcessingException e) {
-            e.printStackTrace();
+            req.setAttribute("message",e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         resp.sendRedirect(req.getContextPath() + "/servlet/getAllUsers");
     }

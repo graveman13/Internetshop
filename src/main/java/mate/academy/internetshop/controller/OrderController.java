@@ -32,9 +32,8 @@ public class OrderController extends HttpServlet {
             throws ServletException, IOException {
         Long userId = (Long) req.getSession(true).getAttribute("userId");
 
-        Bucket bucket = null;
         try {
-            bucket = bucketService.getBucket(userId);
+            Bucket bucket = bucketService.getBucket(userId);
             bucket.setItems(bucketService.getAllItems(bucket));
 
             User user = userService.get(userId);
@@ -44,7 +43,8 @@ public class OrderController extends HttpServlet {
             req.setAttribute("orders", orders);
             req.setAttribute("user_name", user.getName());
         } catch (DataProcessingException e) {
-            e.printStackTrace();
+            req.setAttribute("message",e);
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         req.getRequestDispatcher("/WEB-INF/views/order.jsp").forward(req, resp);
     }
