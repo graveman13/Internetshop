@@ -12,8 +12,10 @@ import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.ItemService;
+import org.apache.log4j.Logger;
 
 public class AddItemToBucketController extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(AddItemToBucketController.class);
     @Inject
     private static ItemService itemService;
     @Inject
@@ -29,7 +31,8 @@ public class AddItemToBucketController extends HttpServlet {
             Bucket bucket = bucketService.getBucket(userId);
             bucketService.addItem(bucket, item);
         } catch (DataProcessingException e) {
-            req.setAttribute("message",e);
+            LOGGER.error(e);
+            req.setAttribute("message", e);
             req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         resp.sendRedirect(req.getContextPath() + "/servlet/bucket");

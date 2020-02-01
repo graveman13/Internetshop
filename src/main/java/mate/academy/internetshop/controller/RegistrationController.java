@@ -14,8 +14,10 @@ import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class RegistrationController extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(OrdersController.class);
     @Inject
     private static UserService userService;
     @Inject
@@ -37,16 +39,15 @@ public class RegistrationController extends HttpServlet {
         user.setSurname(req.getParameter("user_surname"));
         try {
             User userWithID = userService.create(user);
-
             HttpSession session = req.getSession(true);
             session.setAttribute("userId", userWithID.getUserId());
             Cookie cookie = new Cookie("MATE", userWithID.getToken());
             resp.addCookie(cookie);
-
             Bucket bucket = new Bucket();
             bucket.setUser(userWithID.getUserId());
             bucketService.create(bucket);
         } catch (DataProcessingException e) {
+            LOGGER.error(e);
             req.setAttribute("message", e);
             req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }

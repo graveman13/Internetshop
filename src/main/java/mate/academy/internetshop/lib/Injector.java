@@ -9,8 +9,10 @@ import java.util.Enumeration;
 import java.util.List;
 
 import mate.academy.internetshop.dao.UserDao;
+import org.apache.log4j.Logger;
 
 public class Injector {
+    private static final Logger LOGGER = Logger.getLogger(Injector.class);
     private static final String PROJECT_MAIN_PACKAGE = "mate.academy.internetshop";
     private static List<Class> classes = new ArrayList<>();
 
@@ -18,7 +20,8 @@ public class Injector {
         try {
             classes.addAll(getClasses(PROJECT_MAIN_PACKAGE));
         } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
+            throw new RuntimeException();
         }
     }
 

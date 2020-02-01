@@ -13,8 +13,10 @@ import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class LoginController extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(LoginController.class);
     @Inject
     private static UserService userService;
 
@@ -41,6 +43,7 @@ public class LoginController extends HttpServlet {
             req.getRequestDispatcher("WEB-INF/views/menu.jsp").forward(req, resp);
 
         } catch (AuthenticatioException | DataProcessingException e) {
+            LOGGER.error(e);
             req.setAttribute("error", "Incorrect login and password");
             req.getRequestDispatcher("WEB-INF/views/login.jsp").forward(req, resp);
         }

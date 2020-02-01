@@ -16,9 +16,11 @@ import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
+import org.apache.log4j.Logger;
 
 @Dao
 public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
+    private static final Logger LOGGER = Logger.getLogger(UserDaoJdbcImpl.class);
     private static final String TABLE_USERS = "internetshop.users";
     private static final String TABLE_USER_ROLE = "internetshop.user_role";
     private static final String TABLE_ROLE = "internetshop.role";
@@ -72,6 +74,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 user.setRoles(roles);
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't get user " + e);
         }
         return user;
@@ -95,6 +98,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 user.setUserId(rs.getLong(1));
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't get user " + e);
         }
         String setRole = String.format("INSERT INTO %s (user_id,role_id) "
@@ -104,6 +108,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setString(2, "USER");
             statement.executeUpdate();
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't get user role " + e);
         }
         return user;
@@ -123,6 +128,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setString(6, user.getToken());
             statement.setBytes(7, user.getSalt());
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't update user " + e);
         }
         return user;
@@ -136,6 +142,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't delete user " + e);
         }
     }
@@ -162,6 +169,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 users.add(user);
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't get all users " + e);
         }
         return users;

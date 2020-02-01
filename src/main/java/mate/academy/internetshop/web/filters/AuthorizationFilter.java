@@ -21,8 +21,10 @@ import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class AuthorizationFilter implements Filter {
+    private static final Logger LOGGER = Logger.getLogger(AuthorizationFilter.class);
     @Inject
     private static UserService userService;
     private Map<String, Role.RoleName> protectedUrls;
@@ -66,7 +68,8 @@ public class AuthorizationFilter implements Filter {
             try {
                 user = userService.getByToken(token);
             } catch (DataProcessingException e) {
-                e.printStackTrace();
+                LOGGER.error(e);
+                throw new RuntimeException();
             }
             if (user.isPresent()) {
                 if (verifyRole(user.get(), roleName)) {

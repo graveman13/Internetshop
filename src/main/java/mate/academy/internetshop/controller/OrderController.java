@@ -16,8 +16,10 @@ import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.ItemService;
 import mate.academy.internetshop.service.OrderService;
 import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class OrderController extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(OrdersController.class);
     @Inject
     private static OrderService orderService;
     @Inject
@@ -31,19 +33,17 @@ public class OrderController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Long userId = (Long) req.getSession(true).getAttribute("userId");
-
         try {
             Bucket bucket = bucketService.getBucket(userId);
             bucket.setItems(bucketService.getAllItems(bucket));
-
             User user = userService.get(userId);
             orderService.completeOrder(bucket.getItems(), user);
-
             List<Order> orders = orderService.getUserOrders(user);
             req.setAttribute("orders", orders);
             req.setAttribute("user_name", user.getName());
         } catch (DataProcessingException e) {
-            req.setAttribute("message",e);
+            LOGGER.error(e);
+            req.setAttribute("message", e);
             req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         req.getRequestDispatcher("/WEB-INF/views/order.jsp").forward(req, resp);

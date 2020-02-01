@@ -14,9 +14,11 @@ import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.model.Order;
+import org.apache.log4j.Logger;
 
 @Dao
 public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
+    private static final Logger LOGGER = Logger.getLogger(OrderDaoJdbcImpl.class);
     private static final String TABLE_ORDERS = "internetshop.orders";
     private static final String TABLE_ORDERS_ITEMS = "internetshop.orders_items";
     private static final String TABLE_ITEMS = "internetshop.items";
@@ -37,6 +39,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
                 order.setOrderId(rs.getLong(1));
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't create order " + e);
         }
         addItemsToOrderItems(order);
@@ -54,6 +57,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't add items to order " + e);
         }
         return order;
@@ -73,6 +77,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             order.setItems(getAllItemsByOrder(order));
             return Optional.of(order);
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't get order " + e);
         }
     }
@@ -93,6 +98,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
                 items.add(item);
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't get all items by order " + e);
         }
         return items;
@@ -111,6 +117,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             statement.setLong(1, order.getOrderId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't delete all items in order " + e);
         }
         return true;
@@ -124,6 +131,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't delet order by order id " + e);
         }
     }
@@ -144,6 +152,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
                 orders.add(order);
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't get all orders item " + e);
         }
         return orders;

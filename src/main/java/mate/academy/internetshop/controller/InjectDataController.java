@@ -11,8 +11,10 @@ import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class InjectDataController extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(InjectDataController.class);
     @Inject
     private static UserService userService;
 
@@ -28,7 +30,8 @@ public class InjectDataController extends HttpServlet {
         try {
             userService.create(user);
         } catch (DataProcessingException e) {
-            req.setAttribute("message",e);
+            LOGGER.error(e);
+            req.setAttribute("message", e);
             req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         req.setAttribute("userName", user.getName());
@@ -42,7 +45,8 @@ public class InjectDataController extends HttpServlet {
         try {
             userService.create(admin);
         } catch (DataProcessingException e) {
-            req.setAttribute("message",e);
+            LOGGER.error(e);
+            req.setAttribute("message", e);
             req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         req.setAttribute("userName", admin.getName());

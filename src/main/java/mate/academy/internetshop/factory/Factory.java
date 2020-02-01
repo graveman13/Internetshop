@@ -20,8 +20,10 @@ import mate.academy.internetshop.service.impl.BucketServiceImpl;
 import mate.academy.internetshop.service.impl.ItemServiceImpl;
 import mate.academy.internetshop.service.impl.OrderServiceImpl;
 import mate.academy.internetshop.service.impl.UserServiceImpl;
+import org.apache.log4j.Logger;
 
 public class Factory {
+    private static final Logger LOGGER = Logger.getLogger(Factory.class);
     private static Connection connection;
 
     static {
@@ -31,6 +33,7 @@ public class Factory {
                     "jdbc:mysql://localhost:3306/internetshop?"
                             + "user=root&password=root&serverTimezone=UTC");
         } catch (ClassNotFoundException | SQLException e) {
+            LOGGER.error(e);
             e.printStackTrace();
         }
     }

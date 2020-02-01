@@ -11,8 +11,10 @@ import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class GetAllUsersController extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(GetAllUsersController.class);
     @Inject
     private static UserService userService;
 
@@ -23,7 +25,8 @@ public class GetAllUsersController extends HttpServlet {
         try {
             users = userService.getAll();
         } catch (DataProcessingException e) {
-            req.setAttribute("message",e);
+            LOGGER.error(e);
+            req.setAttribute("message", e);
             req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         req.setAttribute("users", users);

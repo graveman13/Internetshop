@@ -16,8 +16,10 @@ import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class AuthenticationFilter implements Filter {
+    private static final Logger LOGGER = Logger.getLogger(AuthenticationFilter.class);
     @Inject
     private static UserService userService;
 
@@ -40,7 +42,8 @@ public class AuthenticationFilter implements Filter {
                 try {
                     user = userService.getByToken(cookie.getValue());
                 } catch (DataProcessingException e) {
-                    e.printStackTrace();
+                    LOGGER.error(e);
+                    throw new RuntimeException(e);
                 }
                 if (user.isPresent()) {
                     chain.doFilter(request, response);
