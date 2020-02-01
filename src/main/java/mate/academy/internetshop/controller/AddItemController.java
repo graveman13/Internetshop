@@ -1,6 +1,7 @@
 package mate.academy.internetshop.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +11,10 @@ import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.ItemService;
+import org.apache.log4j.Logger;
 
 public class AddItemController extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(AddItemController.class);
     @Inject
     private static ItemService itemService;
 
@@ -30,7 +33,8 @@ public class AddItemController extends HttpServlet {
         try {
             itemService.create(item);
         } catch (DataProcessingException e) {
-            req.setAttribute("message",e);
+            LOGGER.error(e);
+            req.setAttribute("message", e);
             req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         req.setAttribute("itemName", item.getItemName());

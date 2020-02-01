@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 public class DeleteUserController extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(DeleteUserController.class);
     @Inject
     private static UserService userService;
 
@@ -21,7 +23,8 @@ public class DeleteUserController extends HttpServlet {
         try {
             userService.deleteId(Long.valueOf(userId));
         } catch (DataProcessingException e) {
-            req.setAttribute("message",e);
+            LOGGER.error(e);
+            req.setAttribute("message", e);
             req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
         resp.sendRedirect(req.getContextPath() + "/servlet/getAllUsers");

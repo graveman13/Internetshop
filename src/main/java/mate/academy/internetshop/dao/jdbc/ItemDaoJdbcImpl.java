@@ -14,9 +14,11 @@ import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.Item;
+import org.apache.log4j.Logger;
 
 @Dao
 public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
+    private static final Logger LOGGER = Logger.getLogger(ItemDaoJdbcImpl.class);
     private static final String DATA_BASE_NAME = "internetshop.items";
 
     public ItemDaoJdbcImpl(Connection connection) {
@@ -37,6 +39,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
                 item.setItemId(rs.getLong(1));
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't create item " + e);
         }
         return item;
@@ -53,6 +56,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
                 return Optional.of(setItemsData(rs));
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't get item " + e);
         }
         return Optional.empty();
@@ -69,6 +73,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
                 items.add(setItemsData(rs));
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't get all items " + e);
         }
         return items;
@@ -84,6 +89,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
             item.setItemName(itemName);
             item.setItemPrice(itemPrice);
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't set items " + e);
         }
         return item;
@@ -100,6 +106,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
             statement.setDouble(3, item.getItemPrice());
             statement.executeUpdate(query);
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't update item " + e);
         }
         return item;
@@ -114,6 +121,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
             statement.executeQuery(query);
             return true;
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't delete item " + e);
         }
     }

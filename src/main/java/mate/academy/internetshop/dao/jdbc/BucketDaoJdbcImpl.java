@@ -14,9 +14,11 @@ import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
+import org.apache.log4j.Logger;
 
 @Dao
 public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao {
+    private static final Logger LOGGER = Logger.getLogger(BucketDaoJdbcImpl.class);
     private static final String TABLE_BUCKET = "internetshop.bucket";
     private static final String TABLE_BUCKET_ITEMS = "internetshop.bucket_items";
 
@@ -37,6 +39,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
                 bucket.setBucketId(rs.getLong(1));
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't create bucket " + e);
         }
         return bucket;
@@ -66,6 +69,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
             }
             bucket.setItems(getItemsByBucket(id));
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't get bucket " + e);
         }
         return bucket;
@@ -105,6 +109,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't refrash bucket " + e);
         }
     }
@@ -117,6 +122,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't delete bucket " + e);
         }
     }
@@ -136,6 +142,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
                 buckets.add(get(rs.getLong("bucket_id")).get());
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't get all buckets " + e);
         }
         return buckets;
@@ -158,6 +165,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
                 items.add(item);
             }
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new DataProcessingException("Can't get items in bucket " + e);
         }
         return items;

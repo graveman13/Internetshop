@@ -10,8 +10,10 @@ import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.service.BucketService;
+import org.apache.log4j.Logger;
 
 public class BucketController extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(BucketController.class);
     @Inject
     private static BucketService bucketService;
 
@@ -25,6 +27,7 @@ public class BucketController extends HttpServlet {
             req.setAttribute("items", bucket.getItems());
             req.getRequestDispatcher("/WEB-INF/views/allItemInBucket.jsp").forward(req, resp);
         } catch (DataProcessingException e) {
+            LOGGER.error(e);
             req.setAttribute("message", e);
             req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
