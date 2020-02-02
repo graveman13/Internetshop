@@ -23,7 +23,7 @@ The functional model represents:
   
  
   <img src="/images/Чертеж1-Model.jpg" alt="auto"
-	title="auto" width="150" height="100" />
+	title="auto" width="350" height="300" />
   
 # <a name="structure"></a>Project Structure
 * Java 11
