@@ -1,5 +1,5 @@
 #Internet Shop
-![shop](/images/online-shopping.jpg){:height="36px" width="36px"}
+![shop](/images/online-shopping.jpg)
 
 # Table of Contents
 * [Project purpose](#purpose)
@@ -21,7 +21,7 @@ The functional model represents:
 * Role 
   >Project has  two role "Admin" , "User".
   
-  ![shop](/images/Чертеж1-Model.jpg)
+  ![shop](/images/Чертеж1-Model.jpg){:height="36px" width="36px"}
   
 # <a name="structure"></a>Project Structure
 * Java 11
