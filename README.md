@@ -21,7 +21,7 @@ The functional model represents:
 * Role 
   >Project has  two role "Admin" , "User".
   
-  ![shop](/images/Чертеж1-Model.jpg |width=100)
+  ![shop](/images/Чертеж1-Model.jpg | width=100)
   
 # <a name="structure"></a>Project Structure
 * Java 11
