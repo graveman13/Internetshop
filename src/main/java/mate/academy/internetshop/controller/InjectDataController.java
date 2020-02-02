@@ -11,6 +11,7 @@ import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
+import mate.academy.internetshop.util.HashUtil;
 import org.apache.log4j.Logger;
 
 public class InjectDataController extends HttpServlet {
@@ -22,11 +23,11 @@ public class InjectDataController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         User user = new User();
-        user.setSurname("Bob");
-        user.setSurname("Martin");
+        user.setSurname("User");
+        user.setSurname("User");
         user.addRoles(Role.of("USER"));
-        user.setLogin("bob");
-        user.setPassword("1");
+        user.setLogin("user");
+        user.setPassword(HashUtil.hashPassword("1", HashUtil.getSalt()));
         try {
             userService.create(user);
         } catch (DataProcessingException e) {
@@ -41,7 +42,7 @@ public class InjectDataController extends HttpServlet {
         admin.setSurname("Admin");
         admin.addRoles(Role.of("ADMIN"));
         admin.setLogin("admin");
-        admin.setPassword("1");
+        admin.setPassword(HashUtil.hashPassword("1", HashUtil.getSalt()));
         try {
             userService.create(admin);
         } catch (DataProcessingException e) {

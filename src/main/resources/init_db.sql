@@ -70,3 +70,10 @@ CREATE TABLE `users` (
   `salt` varbinary(200) DEFAULT NULL,
   PRIMARY KEY (`users_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8
+
+INSERT INTO items (item_name,item_price) values('IPhoneX','1000');
+INSERT INTO items (item_name,item_price) values('Huawei','1600');
+INSERT INTO items (item_name,item_price) values('HTC','200');
+INSERT INTO items (item_name,item_price) values('LG','2000');
+
+

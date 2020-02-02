@@ -8,6 +8,7 @@ import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.dao.OrderDao;
 import mate.academy.internetshop.dao.UserDao;
+import mate.academy.internetshop.dao.impl.BucketDaoImpl;
 import mate.academy.internetshop.dao.jdbc.BucketDaoJdbcImpl;
 import mate.academy.internetshop.dao.jdbc.ItemDaoJdbcImpl;
 import mate.academy.internetshop.dao.jdbc.OrderDaoJdbcImpl;
@@ -34,7 +35,7 @@ public class Factory {
                             + "user=root&password=root&serverTimezone=UTC");
         } catch (ClassNotFoundException | SQLException e) {
             LOGGER.error(e);
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -50,7 +51,7 @@ public class Factory {
 
     public static BucketDao getBucketDao() {
         if (bucketDao == null) {
-            bucketDao = new BucketDaoJdbcImpl(connection);
+            bucketDao = new BucketDaoImpl();
         }
         return bucketDao;
     }
