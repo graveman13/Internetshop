@@ -1,5 +1,5 @@
 #Internet Shop
-![shop](/images/online-shopping.jpg)
+![shop](/images/online-shopping.jpg){:height="36px" width="36px"}
 
 # Table of Contents
 * [Project purpose](#purpose)
