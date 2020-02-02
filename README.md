@@ -20,8 +20,10 @@ The functional model represents:
   >Ordered goods.
 * Role 
   >Project has  two role "Admin" , "User".
-  
-  ![shop](/images/Чертеж1-Model.jpg)
+   
+  Available functions for model User:
+ 
+  <img src="/images/Чертеж1-Model.jpg" alt="auto" title="auto" width="450" height="400" />
   
 # <a name="structure"></a>Project Structure
 * Java 11
