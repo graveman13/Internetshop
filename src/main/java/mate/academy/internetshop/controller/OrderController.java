@@ -44,7 +44,8 @@ public class OrderController extends HttpServlet {
         } catch (DataProcessingException e) {
             LOGGER.error(e);
             req.setAttribute("message", e);
-            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp")
+                    .forward(req, resp);
         }
         req.getRequestDispatcher("/WEB-INF/views/order.jsp").forward(req, resp);
     }

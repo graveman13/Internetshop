@@ -1,18 +1,17 @@
 package mate.academy.internetshop.web.filters;
 
 import static mate.academy.internetshop.model.Role.RoleName.ADMIN;
+import static mate.academy.internetshop.model.Role.RoleName.USER;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,6 +33,11 @@ public class AuthorizationFilter implements Filter {
         protectedUrls = new HashMap<>();
         protectedUrls.put("/servlet/getAllUsers", ADMIN);
         protectedUrls.put("/servlet/add_item", ADMIN);
+        protectedUrls.put("/servlet/bucket", USER);
+        protectedUrls.put("/servlet/bucket_del_item", USER);
+        protectedUrls.put("/servlet/bucket_add_item", USER);
+        protectedUrls.put("/servlet/order", USER);
+        protectedUrls.put("/servlet/orders", USER);
     }
 
     @Override
@@ -41,48 +45,25 @@ public class AuthorizationFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-
-        Cookie[] cookies = req.getCookies();
-        if (cookies == null) {
-            processUnAuthentication(req, resp);
-            return;
-        }
         String requestedUrl = req.getRequestURI().replace(req.getContextPath(), "");
         Role.RoleName roleName = protectedUrls.get(requestedUrl);
         if (roleName == null) {
             processAuthentication(req, resp, chain);
             return;
         }
-        String token = null;
-        for (Cookie cookie : req.getCookies()) {
-            if (cookie.getName().equals("MATE")) {
-                token = cookie.getValue();
-                break;
-            }
-        }
-        if (token == null) {
-            processAuthentication(req, resp, chain);
-            return;
-        } else {
-            Optional<User> user = null;
-            try {
-                user = userService.getByToken(token);
-            } catch (DataProcessingException e) {
-                LOGGER.error(e);
-                throw new RuntimeException();
-            }
-            if (user.isPresent()) {
-                if (verifyRole(user.get(), roleName)) {
-                    processAuthentication(req, resp, chain);
-                    return;
-                } else {
-                    processDenied(req, resp);
-                    return;
-                }
-            } else {
+        Long userId = (Long) req.getSession().getAttribute("userId");
+        try {
+            User user = userService.get(userId);
+            if (verifyRole(user, roleName)) {
                 processAuthentication(req, resp, chain);
                 return;
+            } else {
+                processDenied(req, resp);
+                return;
             }
+        } catch (DataProcessingException e) {
+            LOGGER.error(e);
+            throw new RuntimeException();
         }
     }
 

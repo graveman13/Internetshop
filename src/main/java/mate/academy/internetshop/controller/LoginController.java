@@ -42,10 +42,12 @@ public class LoginController extends HttpServlet {
             req.setAttribute("userName", user.getName());
             req.getRequestDispatcher("WEB-INF/views/menu.jsp").forward(req, resp);
 
-        } catch (AuthenticatioException | DataProcessingException e) {
+        } catch (AuthenticatioException e) {
             LOGGER.error(e);
             req.setAttribute("error", "Incorrect login and password");
             req.getRequestDispatcher("WEB-INF/views/login.jsp").forward(req, resp);
+        } catch (DataProcessingException e) {
+            req.getRequestDispatcher("WEB-INF/views/index.jsp").forward(req, resp);
         }
     }
 }

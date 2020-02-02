@@ -51,6 +51,6 @@ public class RegistrationController extends HttpServlet {
             req.setAttribute("message", e);
             req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
-        resp.sendRedirect(req.getContextPath() + "/servlet/getAllUsers");
+        req.getRequestDispatcher("/WEB-INF/views/menu.jsp");
     }
 }

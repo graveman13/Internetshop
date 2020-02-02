@@ -34,6 +34,14 @@
         <url-pattern>/servlet/getAllUsers</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>MenuController</servlet-name>
+        <servlet-class>mate.academy.internetshop.controller.MenuController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MenuController</servlet-name>
+        <url-pattern>/menu_g</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>RegistrationController</servlet-name>
         <servlet-class>mate.academy.internetshop.controller.RegistrationController</servlet-class>
     </servlet>

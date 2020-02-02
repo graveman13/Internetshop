@@ -11,16 +11,20 @@ import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.ItemService;
+import mate.academy.internetshop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class AddItemController extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(AddItemController.class);
     @Inject
     private static ItemService itemService;
+    @Inject
+    private static UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        req.getParameter("userName");
         req.getRequestDispatcher("/WEB-INF/views/addItems.jsp").forward(req, resp);
     }
 
@@ -35,10 +39,12 @@ public class AddItemController extends HttpServlet {
         } catch (DataProcessingException e) {
             LOGGER.error(e);
             req.setAttribute("message", e);
-            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp")
+                    .forward(req, resp);
         }
         req.setAttribute("itemName", item.getItemName());
         req.setAttribute("itemPrice", item.getItemPrice());
-        getServletContext().getRequestDispatcher("/WEB-INF/views/addedItem.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/views/addedItem.jsp")
+                .forward(req, resp);
     }
 }

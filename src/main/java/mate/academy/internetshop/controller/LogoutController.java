@@ -14,10 +14,12 @@ public class LogoutController extends HttpServlet {
         req.getSession().invalidate();
         for (Cookie cookie : req.getCookies()) {
             if (cookie.getName().equals("MATE")) {
-                cookie.setMaxAge(0);
                 cookie.setValue("");
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                resp.addCookie(cookie);
             }
         }
-        req.getRequestDispatcher("WEB-INF/views/menu.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/views/login.jsp").forward(req, resp);
     }
 }
