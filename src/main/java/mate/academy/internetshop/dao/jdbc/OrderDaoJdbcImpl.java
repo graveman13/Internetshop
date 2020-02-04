@@ -46,7 +46,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
         return order;
     }
 
-    public Order addItemsToOrderItems(Order order) throws DataProcessingException {
+    private Order addItemsToOrderItems(Order order) throws DataProcessingException {
         String addItems =
                 String.format("insert into  %s (order_id,item_id) values (?,?)",
                         TABLE_ORDERS_ITEMS);
@@ -82,7 +82,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
         }
     }
 
-    public List<Item> getAllItemsByOrder(Order order) throws DataProcessingException {
+    private List<Item> getAllItemsByOrder(Order order) throws DataProcessingException {
         List<Item> items = new ArrayList<>();
         String getAllItem = String.format("select * from %s"
                 + " join %s on orders_items.item_id = items.item_id"
@@ -110,7 +110,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
         return addItemsToOrderItems(order);
     }
 
-    public boolean deleteAllItemsInOrder(Order order) throws DataProcessingException {
+    private boolean deleteAllItemsInOrder(Order order) throws DataProcessingException {
         String deleteAllItems = String.format(
                 "delete from %s where order_id =?;", TABLE_ORDERS_ITEMS);
         try (PreparedStatement statement = connection.prepareStatement(deleteAllItems)) {

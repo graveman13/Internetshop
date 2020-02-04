@@ -11,15 +11,12 @@ import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.ItemService;
-import mate.academy.internetshop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class AddItemController extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(AddItemController.class);
     @Inject
     private static ItemService itemService;
-    @Inject
-    private static UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

@@ -12,11 +12,7 @@ public interface BucketService extends GenericService<Bucket, Long> {
 
     void deleteItem(Bucket bucket, Item item) throws DataProcessingException;
 
-    void clear(Bucket bucket) throws DataProcessingException;
-
     Bucket getBucket(Long userId) throws DataProcessingException;
-
-    List<Bucket> getAllBucketByUser(Long userId) throws DataProcessingException;
 
     List<Item> getAllItems(Bucket bucket) throws DataProcessingException;
 

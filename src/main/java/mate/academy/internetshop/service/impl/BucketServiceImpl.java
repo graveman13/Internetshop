@@ -1,10 +1,8 @@
 package mate.academy.internetshop.service.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import mate.academy.internetshop.dao.BucketDao;
-import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.exceptions.DataProcessingException;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.lib.Service;
@@ -16,8 +14,6 @@ import mate.academy.internetshop.service.BucketService;
 public class BucketServiceImpl implements BucketService {
     @Inject
     private static BucketDao bucketDao;
-    @Inject
-    private static ItemDao itemDao;
 
     @Override
     public Bucket create(Bucket bucket) throws DataProcessingException {
@@ -63,12 +59,6 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
-    public void clear(Bucket bucket) throws DataProcessingException {
-        bucket.getItems().clear();
-        bucketDao.update(bucket);
-    }
-
-    @Override
     public Bucket getBucket(Long userId) throws DataProcessingException {
         return bucketDao.getByUserId(userId).get();
     }
@@ -77,12 +67,5 @@ public class BucketServiceImpl implements BucketService {
     public List<Item> getAllItems(Bucket bucket) throws DataProcessingException {
         Bucket bucketTmp = bucketDao.get(bucket.getBucketId()).get();
         return bucketTmp.getItems();
-    }
-
-    @Override
-    public List<Bucket> getAllBucketByUser(Long userId) throws DataProcessingException {
-        return bucketDao.getAll().stream()
-                .filter(bucket -> bucket.getUserId().equals(userId))
-                .collect(Collectors.toList());
     }
 }

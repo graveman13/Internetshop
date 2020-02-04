@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 
 public class InjectDataController extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(InjectDataController.class);
+    private static final String HASH_PASSWORD = HashUtil.hashPassword("1", HashUtil.getSalt());
     @Inject
     private static UserService userService;
 
@@ -27,30 +28,22 @@ public class InjectDataController extends HttpServlet {
         user.setSurname("User");
         user.addRoles(Role.of("USER"));
         user.setLogin("user");
-        user.setPassword(HashUtil.hashPassword("1", HashUtil.getSalt()));
-        try {
-            userService.create(user);
-        } catch (DataProcessingException e) {
-            LOGGER.error(e);
-            req.setAttribute("message", e);
-            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
-        }
-        req.setAttribute("userName", user.getName());
+        user.setPassword(HASH_PASSWORD);
 
         User admin = new User();
         admin.setSurname("Admin");
         admin.setSurname("Admin");
         admin.addRoles(Role.of("ADMIN"));
         admin.setLogin("admin");
-        admin.setPassword(HashUtil.hashPassword("1", HashUtil.getSalt()));
+        admin.setPassword(HASH_PASSWORD);
         try {
+            userService.create(user);
             userService.create(admin);
         } catch (DataProcessingException e) {
             LOGGER.error(e);
             req.setAttribute("message", e);
             req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
-        req.setAttribute("userName", admin.getName());
         req.getRequestDispatcher("WEB-INF/views/menu.jsp").forward(req, resp);
     }
 }

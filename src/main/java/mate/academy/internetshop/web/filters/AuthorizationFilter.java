@@ -29,7 +29,7 @@ public class AuthorizationFilter implements Filter {
     private Map<String, Role.RoleName> protectedUrls;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         protectedUrls = new HashMap<>();
         protectedUrls.put("/servlet/getAllUsers", ADMIN);
         protectedUrls.put("/servlet/add_item", ADMIN);
@@ -56,10 +56,8 @@ public class AuthorizationFilter implements Filter {
             User user = userService.get(userId);
             if (verifyRole(user, roleName)) {
                 processAuthentication(req, resp, chain);
-                return;
             } else {
                 processDenied(req, resp);
-                return;
             }
         } catch (DataProcessingException e) {
             LOGGER.error(e);
@@ -82,13 +80,7 @@ public class AuthorizationFilter implements Filter {
         chain.doFilter(req, resp);
     }
 
-    private void processUnAuthentication(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
-        resp.sendRedirect(req.getContextPath() + "/login");
-    }
-
     @Override
     public void destroy() {
-
     }
 }
