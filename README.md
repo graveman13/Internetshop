@@ -70,6 +70,7 @@ change to:
      }
 ```
 
+
 if you use "mySQL" open file internet-shop/src/main/java/mate.academy.internetshop/resources/init_db.sql to create schema and all the tables.
 
 You need to create a directory "log" and specify the path to it internet-shop/src/main/java/mate.academy.internetshop/resources/log4j.properties.
