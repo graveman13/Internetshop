@@ -1,4 +1,4 @@
-#Internet Shop
+
 ![shop](/images/online-shopping.jpg)
 
 # Table of Contents
