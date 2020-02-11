@@ -62,7 +62,7 @@ Configure Tomcat:
  ```
 change to:
 ```
-> public static BucketDao getBucketDao() {
+ public static BucketDao getBucketDao() {
          if (bucketDao == null) {
              bucketDao = new BucketDaoImpl();
          }
