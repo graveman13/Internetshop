@@ -35,7 +35,8 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 + " join %s on users.users_id = user_role.user_id"
                 + " join role on user_role.role_id = role.role_id"
                 + " where users.login ='%s';", TABLE_USERS, TABLE_USER_ROLE, login);
-        return Optional.of(generalGetByQuery(query));
+        return generalGetByQuery(query).getName()
+                == null ? Optional.empty() : Optional.of(generalGetByQuery(query));
     }
 
     @Override
@@ -44,7 +45,8 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 + " join %s on users.users_id = user_role.user_id"
                 + " join role on user_role.role_id = role.role_id"
                 + " where users.token ='%s';", TABLE_USERS, TABLE_USER_ROLE, token);
-        return Optional.of(generalGetByQuery(query));
+        return generalGetByQuery(query).getName()
+                == null ? Optional.empty() : Optional.of(generalGetByQuery(query));
     }
 
     @Override
@@ -53,7 +55,8 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 + " join %s on users.users_id = user_role.user_id"
                 + " join role on user_role.role_id = role.role_id"
                 + " where users.users_id ='%s';", TABLE_USERS, TABLE_USER_ROLE, id);
-        return Optional.of(generalGetByQuery(query));
+        return generalGetByQuery(query).getName()
+                == null ? Optional.empty() : Optional.of(generalGetByQuery(query));
     }
 
     private User generalGetByQuery(String query) throws DataProcessingException {

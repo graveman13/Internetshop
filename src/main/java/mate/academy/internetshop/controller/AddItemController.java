@@ -21,6 +21,7 @@ public class AddItemController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        req.getParameter("userName");
         req.getRequestDispatcher("/WEB-INF/views/addItems.jsp").forward(req, resp);
     }
 
@@ -35,10 +36,12 @@ public class AddItemController extends HttpServlet {
         } catch (DataProcessingException e) {
             LOGGER.error(e);
             req.setAttribute("message", e);
-            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
+            req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp")
+                    .forward(req, resp);
         }
         req.setAttribute("itemName", item.getItemName());
         req.setAttribute("itemPrice", item.getItemPrice());
-        getServletContext().getRequestDispatcher("/WEB-INF/views/addedItem.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/views/addedItem.jsp")
+                .forward(req, resp);
     }
 }

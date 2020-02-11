@@ -88,13 +88,13 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
         return bucket;
     }
 
-    public void deleteItems(Bucket bucket, List<Item> items) throws DataProcessingException {
+    private void deleteItems(Bucket bucket, List<Item> items) throws DataProcessingException {
         String query = String.format(
                 "delete from %s where bucket_id = ? and item_id =?;", TABLE_BUCKET_ITEMS);
         refreshItemsInBucket(bucket, items, query);
     }
 
-    public void insertItem(Bucket bucket, List<Item> items) throws DataProcessingException {
+    private void insertItem(Bucket bucket, List<Item> items) throws DataProcessingException {
         String query = String.format("insert into %s  (bucket_id,item_id) values(?,?);",
                 TABLE_BUCKET_ITEMS);
         refreshItemsInBucket(bucket, items, query);

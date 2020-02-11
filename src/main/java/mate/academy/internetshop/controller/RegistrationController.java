@@ -30,8 +30,7 @@ public class RegistrationController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         User user = new User();
         user.setLogin(req.getParameter("login"));
         user.setPassword(req.getParameter("psw"));
@@ -51,6 +50,6 @@ public class RegistrationController extends HttpServlet {
             req.setAttribute("message", e);
             req.getRequestDispatcher("/WEB-INF/views/dataProcessingExeption.jsp");
         }
-        resp.sendRedirect(req.getContextPath() + "/servlet/getAllUsers");
+        req.getRequestDispatcher("/WEB-INF/views/menu.jsp");
     }
 }

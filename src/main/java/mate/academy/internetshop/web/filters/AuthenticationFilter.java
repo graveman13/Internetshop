@@ -1,30 +1,22 @@
 package mate.academy.internetshop.web.filters;
 
 import java.io.IOException;
-import java.util.Optional;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import mate.academy.internetshop.exceptions.DataProcessingException;
-import mate.academy.internetshop.lib.Inject;
-import mate.academy.internetshop.model.User;
-import mate.academy.internetshop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class AuthenticationFilter implements Filter {
     private static final Logger LOGGER = Logger.getLogger(AuthenticationFilter.class);
-    @Inject
-    private static UserService userService;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override
@@ -32,25 +24,12 @@ public class AuthenticationFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-        if (req.getCookies() == null) {
-            processUnAuthentication(req, resp);
+        Long userId = (Long) req.getSession().getAttribute("userId");
+        if (userId != null) {
+            chain.doFilter(req, resp);
             return;
         }
-        for (Cookie cookie : req.getCookies()) {
-            if (cookie.getName().equals("MATE")) {
-                Optional<User> user = null;
-                try {
-                    user = userService.getByToken(cookie.getValue());
-                } catch (DataProcessingException e) {
-                    LOGGER.error(e);
-                    throw new RuntimeException(e);
-                }
-                if (user.isPresent()) {
-                    chain.doFilter(request, response);
-                    return;
-                }
-            }
-        }
+        LOGGER.info("This user could not be found");
         processUnAuthentication(req, resp);
     }
 

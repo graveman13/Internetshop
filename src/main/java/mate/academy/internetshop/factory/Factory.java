@@ -34,7 +34,7 @@ public class Factory {
                             + "user=root&password=root&serverTimezone=UTC");
         } catch (ClassNotFoundException | SQLException e) {
             LOGGER.error(e);
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
